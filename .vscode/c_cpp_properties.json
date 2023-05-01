@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "GCC13",
+            "includePath": [
+                "${default}"
+            ],
+            "defines": [
+                "${default}"
+            ],
+            "macFrameworkPath": [
+                "${default}"
+            ],
+            "forcedInclude": [
+                "${default}"
+            ],
+            "compileCommands": "${default}",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "${default}",
+                "path": [
+                    "${default}"
+                ]
+            },
+            "intelliSenseMode": "${default}",
+            "cStandard": "c23",
+            "cppStandard": "${default}",
+            "compilerPath": "/usr/bin/gcc-13"
+        }
+    ],
+    "version": 4
+}
