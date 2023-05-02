@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <uchar.h> /* char8_t */
 
 [[nodiscard("Please evaluate return value!")]]
 int f_nodiscard(unsigned int a, unsigned int b)
@@ -6,10 +7,63 @@ int f_nodiscard(unsigned int a, unsigned int b)
     return a + b;
 }
 
+
+typedef enum
+{
+    MODE_A,
+    MODE_B,
+    MODE_C,
+    MODE_ERR
+} mode_t;
+
+/* Attribute
+ * [[fallthrough]]
+ */
+int f_fallthrough(mode_t x)
+{
+    int r;
+
+    switch (x)
+    {
+        case MODE_A:
+            r = 42;
+            break;
+        case MODE_B:
+            r = 12; /* warning: this statement may fall through [-Wimplicit-fallthrough] */
+        case MODE_C:
+            r = 69;
+            break;
+        case MODE_ERR:
+        [[fallthrough]]; /* no warning because intentional fallthrough */
+        default:
+            r = 0;
+            break;
+    }
+
+    return r;
+}
+
 int main(void)
 {
     printf("C standard %ld\n", __STDC_VERSION__);
     printf("gcc version %d.%d.%d\n", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__ );
+
+    /* u8 character constant for use with UTF-8 string literals
+     *
+     * U+006A   j   6a              LATIN SMALL LETTER J
+     * U+00DF   ß   c3 9f           LATIN SMALL LETTER SHARP S
+     * U+221B   ∛   e2 88 9b        CUBE ROOT
+     * U+1F375  🍵  f0 9f 8d b5     TEACUP WITHOUT HANDLE
+     *
+     * (https://www.utf8-chartable.de/)
+     */
+    char8_t str[] = u8"jß∛🍵"; /* = "\U006a\U00df\U221B\U0001F375" */
+    printf("u8 string: %s\n", str);
+    for (size_t s = 0U; s < sizeof(str) / sizeof(str[0]); s++)
+    {
+        printf("%02X ", str[s]);
+    }
+    putchar('\n');
 
     /* Digit separators
      */
