@@ -65,6 +65,17 @@ int main(void)
     }
     putchar('\n');
 
+    /* static assert, a.k.a compile time assert
+     * example to test implementation-defined size_t
+     * compile time error: static assertion failed: "size_t must be 4!"
+     */
+    static_assert(8 == sizeof(size_t)); /* error on 32-bit machine */
+    static_assert(8 == sizeof(size_t), "size_t must be 8!"); /* + optional message */
+#if 0 /* to let the code compile on 64-bit machine */
+    static_assert(4 == sizeof(size_t)); /* error on 64-bit machine */
+    static_assert(4 == sizeof(size_t), "size_t must be 4!"); /* + optional message */
+#endif
+
     /* Digit separators
      */
     unsigned int n1 = 0xDEAD'BEEF;
