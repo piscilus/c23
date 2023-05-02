@@ -83,20 +83,20 @@ int main(void)
 
     /* predefined true and false (without stdbool.h)
      */
-    _Bool x = true;
-    _Bool y = false;
+    [[maybe_unused]] _Bool x = true;
+    [[maybe_unused]] _Bool y = false;
 
     /* Digit separators
      */
     unsigned int n1 = 0xDEAD'BEEF;
     unsigned int n2 = 123'456'789;
-    float f1 = 0.123'45F;
-    float f2 = 12'345.6F;
+    [[maybe_unused]] float f1 = 0.123'45F;
+    [[maybe_unused]] float f2 = 12'345.6F;
 
     /* Binary integer constants
      * https://en.cppreference.com/w/c/language/integer_constant
      */
-    unsigned int m = 0b10101010;
+    [[maybe_unused]] unsigned int m = 0b10101010;
 
     /* Warning directive
      * https://en.cppreference.com/w/c/preprocessor/error
