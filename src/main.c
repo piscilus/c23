@@ -76,6 +76,11 @@ int main(void)
     static_assert(4 == sizeof(size_t), "size_t must be 4!"); /* + optional message */
 #endif
 
+    /* predefined true and false (without stdbool.h)
+     */
+    _Bool x = true;
+    _Bool y = false;
+
     /* Digit separators
      */
     unsigned int n1 = 0xDEAD'BEEF;
