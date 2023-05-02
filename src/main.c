@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <uchar.h> /* char8_t */
 
+/* Attributes
+ * [[nodiscard]]
+ * [[maybe_unused]]
+ * warning for unused parameter c suppressed by attribute, but not for d:
+ * -> warning: unused parameter ‘d’ [-Wunused-parameter]
+ */
 [[nodiscard("Please evaluate return value!")]]
-int f_nodiscard(unsigned int a, unsigned int b)
+int f_nodiscard(unsigned int a, unsigned int b, [[maybe_unused]] int c, int d)
 {
     return a + b;
 }
-
 
 typedef enum
 {
@@ -103,8 +108,8 @@ int main(void)
      * [[nodiscard("reason")]]
      */
     printf("%i\n", __has_c_attribute(nodiscard));
-    f_nodiscard(n1, n2); // implicit discard -> warning
-    (void) f_nodiscard(n1, n2); // explicit discard -> okay
+    f_nodiscard(n1, n2, 42, 69); // implicit discard -> warning
+    (void) f_nodiscard(n1, n2, 42, 69); // explicit discard -> okay
 
     return 0;
 }
