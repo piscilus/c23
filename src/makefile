@@ -20,7 +20,8 @@ CFLAGS =\
 	-Wpedantic\
 	-fsanitize=undefined\
 	-fsanitize-undefined-trap-on-error\
-	-g
+	-O0\
+	-g3
 
 LD = gcc-13
 LDFLAGS =\
