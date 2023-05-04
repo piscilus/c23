@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <uchar.h> /* char8_t */
+#include <stdint.h>
 
 /* Attributes
  * [[nodiscard]]
@@ -52,6 +53,20 @@ int main(void)
 {
     printf("C standard %ld\n", __STDC_VERSION__);
     printf("gcc version %d.%d.%d\n", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__ );
+
+    /* constexpr
+     */
+    const int8_t a = 5;
+    constexpr int8_t b = 5;
+
+    int8_t v, w;
+    v = INT8_MAX + a; /* no warning */
+    w = INT8_MAX + b; /* warning: overflow in conversion from ‘int’ to ‘int8_t’ {aka ‘signed char’} changes value from ‘132’ to ‘-124’ [-Woverflow] */
+
+#if 0 /* to let the code compile */
+    static_assert(a == 5); /* error: expression in static assertion is not constant */
+#endif
+    static_assert(b == 5); /* ok */
 
     /* u8 character constant for use with UTF-8 string literals
      *
