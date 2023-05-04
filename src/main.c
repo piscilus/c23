@@ -1,6 +1,8 @@
+#include <assert.h>
+#include <stddef.h> /* unreachable */
+#include <stdint.h>
 #include <stdio.h>
 #include <uchar.h> /* char8_t */
-#include <stdint.h>
 
 /* Attributes
  * [[nodiscard]]
@@ -48,6 +50,34 @@ int f_fallthrough(mode_t x)
 
     return r;
 }
+
+int f_unreachable(mode_t x)
+{
+    int r;
+
+    switch (x)
+    {
+        case MODE_A:
+            r = 42;
+            break;
+        case MODE_B:
+            r = 12;
+            break;
+        case MODE_C:
+            r = 69;
+            break;
+        case MODE_ERR:
+            r = 1;
+            break;
+        default: /* all possible cases handled before */
+            assert(0);
+            unreachable();
+            break;
+    }
+
+    return r;
+}
+
 
 int main(void)
 {
@@ -126,6 +156,7 @@ int main(void)
     f_nodiscard(n1, n2, 42, 69); // implicit discard -> warning
     (void) f_nodiscard(n1, n2, 42, 69); // explicit discard -> okay
 
+    while(1);
     return 0;
 }
 
